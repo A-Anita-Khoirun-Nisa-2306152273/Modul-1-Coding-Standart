@@ -14,10 +14,28 @@ public class ProductRepository {
     public Product create(Product product) {
         productData.add(product);
         return product;
-
     }
 
     public Iterator<Product> findAll() {
         return productData.iterator();
+    }
+
+    public Product findById(String id) {
+        for (Product product : productData) {
+            if (product.getProductId().equals(id)) {
+                return product;
+            }
+        }
+        return null;
+    }
+
+    public Product edit(Product updatedProduct) {
+        Product existingProduct = findById(updatedProduct.getProductId());
+
+        if (existingProduct != null) {
+            existingProduct.update(updatedProduct);
+        }
+
+        return existingProduct;
     }
 }
