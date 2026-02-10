@@ -45,7 +45,7 @@ public class ProductController {
 
     @PostMapping("/edit")
     public String editProductPost(@ModelAttribute Product product, Model model) {
-        service.edit(product);
+        service.editProduct(product.getProductId(), product);
         return "redirect:list";
     }
 
