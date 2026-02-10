@@ -28,4 +28,17 @@ class ProductTest {
     void testGetProductQuantity() {
         assertEquals(100, this. product.getProductQuantity());
     }
+
+    @Test
+    void testProductQuantityWithNegativeValue() {
+        this.product.setProductQuantity(-40);
+
+        assertEquals(-60, this.product.getProductQuantity());
+        assertNotEquals(0, this.product.getProductQuantity());
+    }
+
+    @Test
+    void testProductNameOnMismatch() {
+        assertNotEquals("Sampo Sampoan", this.product.getProductName());
+    }
 }
