@@ -31,7 +31,7 @@ class ProductTest {
 
     @Test
     void testProductQuantityWithNegativeValue() {
-        this.product.setProductQuantity(-40);
+        this.product.setProductQuantity(-60);
 
         assertEquals(-60, this.product.getProductQuantity());
         assertNotEquals(0, this.product.getProductQuantity());
