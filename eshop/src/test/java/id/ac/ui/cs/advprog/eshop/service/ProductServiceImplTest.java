@@ -33,4 +33,12 @@ class ProductServiceImplTest {
 
         verify(productRepository, times(1)).edit(product);
     }
+
+    @Test
+    void testDeleteProductByIdPositive() {
+        String productId = "product-id-valid";
+
+        productService.deleteProduct(productId);
+        verify(productRepository, times(1)).delete(productId);
+    }
 }
