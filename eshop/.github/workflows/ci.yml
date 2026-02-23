@@ -1,0 +1,23 @@
+name: Continuous Integration (CI)
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: Run test
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout the Git Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java toolchain
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
+
+      - name: Run Unit Test
+        run: ./gradlew test
