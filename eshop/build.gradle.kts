@@ -7,7 +7,7 @@ plugins {
     java
     jacoco
     id("pmd")
-    id("org.springframework.boot") version "4.0.2"
+    id("org.springframework.boot") version "3.5.4"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -44,7 +44,6 @@ dependencies {
     testImplementation("org.seleniumhq.selenium:selenium-java:${seleniumJavaVersion}")
     testImplementation("io.github.bonigarcia:webdrivermanager:${webdrivermanagerVersion}")
     testImplementation("io.github.bonigarcia:selenium-jupiter:${seleniumJupiterVersion}")
-    testImplementation("org.junit.jupiter:junit-jupiter:${junitJupiterVersion}")
 }
 
 tasks.register<Test>("unitTest") {
