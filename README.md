@@ -1,5 +1,5 @@
 # *Anita Khoirun Nisa - 2306152273*
-# **Refleksi 1 – Clean Code & Secure Coding Practices**
+# **Refleksi 1 – Clean Code & Secure Coding Practices (Modul 1)**
 
 **Soal:**
 You already implemented two new features using Spring Boot. Check again your source code and evaluate the coding standards that you have learned in this module. Write clean code principles and secure coding practices that have been applied to your code. If you find any mistake in your source code, please explain how to improve your code.
@@ -20,7 +20,7 @@ Secara keseluruhan, implementasi fitur ini membantu saya memahami bagaimana mene
 
 ---
 
-# **Refleksi 2 – Clean Code & Secure Coding Practices**
+# **Refleksi 2 – Clean Code & Secure Coding Practices (Modul 1)**
 
 **Soal 1:**
 After writing the unit test, how do you feel? How many unit tests should be made in a class? How to make sure that our unit tests are enough to verify our program? It would be good if you learned about code coverage. Code coverage is a metric that can help you understand how much of your source is tested. If you have 100% code coverage, does that mean your code has no bugs or errors?
@@ -47,3 +47,29 @@ What do you think about the cleanliness of the code of the new functional test s
 - Semakin banyak kelas dengan boilerplate yang sama, semakin besar beban kognitif bagi pengembang lain untuk memahami mana bagian yang benar-benar berbeda di setiap test, sehingga perlu maintenance yang tinggi.
 
 Mungkin, hal yang bisa dilakukan untuk mencegah/mengatasi masalah clean code adalah dengan menerapkan inheritance. Lalu, jika ada logika pengisian data yang sering dipakai, pindahkan ke kelas utility khusus. Jangan biarkan logika bisnis test bercampur dengan logika teknis penyiapan data.
+
+# **Refleksi Modul 2 – CI/CD, Code Quality Analysis, dan Deployment**
+
+## **Soal 1:**
+List the code quality issue(s) that you fixed during the exercise and explain your strategy on fixing them
+
+**Jawaban:**
+
+Selama exercise Modul 2, saya menjalankan code scanning menggunakan PMD (versi 7.0.0-rc4). Dari hasil `pmdTest`, saya menemukan pelanggaran rule **AvoidDuplicateLiterals** pada file test `ProductRepositoryTest.java`. PMD mendeteksi beberapa string literal yang digunakan berulang kali yang terdapat pada nama produk dan id produk sehingga dianggap mengurangi maintainability dan meningkatkan risiko inkonsistensi apabila string tersebut perlu diubah di masa depan.
+
+Strategi perbaikan yang saya lakukan adalah:
+- Mengganti string literal yang muncul berulang menjadi **konstanta** `private static final String ...`.
+- Menggunakan konstanta tersebut di seluruh test case agar tidak ada duplikasi literal.
+- Menjalankan ulang `./gradlew pmdTest` untuk memastikan pelanggaran hilang.
+- Menyimpan perbaikan ini sebagai **commit terpisah** agar history dapat dilihat dengan jelas.
+
+Dengan pendekatan ini, unit test menjadi lebih mudah di maintanance dan perubahan pada nilai string cukup dilakukan di satu tempat.
+
+## **Soal 2:**
+Look at your CI/CD workflows (GitHub)/pipelines (GitLab). Do you think the current implementation has met the definition of Continuous Integration and Continuous Deployment? Explain the reasons (minimum 3 sentences)!
+
+**Jawaban:**
+
+Menurut saya, workflow yang saya buat sudah sesuai dengan konsep **Continuous Integration (CI)** karena setiap ada push maupun pull request, pipeline langsung berjalan otomatis: melakukan checkout repository, menyiapkan environment Java, lalu menjalankan test suite menggunakan Gradle. Dengan mekanisme ini, saya bisa mendapat umpan balik cepat jika ada perubahan yang membuat build rusak atau test gagal, sehingga proses integrasi ke branch utama menjadi lebih aman.
+
+Untuk **Continuous Deployment (CD)**, implementasi ini juga dapat dikatakan memenuhi prinsip CD selama proses deploy ke PaaS berjalan otomatis ketika ada perubahan yang masuk ke branch utama yakni setelah merge ke main. Dengan fitur auto-deploy dari PaaS (pull-based Koyeb), perubahan yang sudah lolos CI bisa langsung dipublikasikan tanpa langkah manual tambahan. Meski begitu, perlu tetap ada kontrol seperti membatasi deploy hanya dari branch utama dan mengelola secrets dengan benar agar deployment tetap aman dan stabil.
