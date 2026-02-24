@@ -6,7 +6,7 @@ COPY . .
 # Project Gradle ada di folder "eshop"
 WORKDIR /src/eshop
 RUN chmod +x ./gradlew
-RUN ./gradlew clean bootJar
+RUN ./gradlew clean bootJar -x test
 
 FROM docker.io/library/eclipse-temurin:21-jre-alpine AS runner
 
