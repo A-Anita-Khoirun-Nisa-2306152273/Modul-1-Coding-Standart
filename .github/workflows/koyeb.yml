@@ -30,10 +30,13 @@ jobs:
           service-name: ${{ secrets.KOYEB_SERVICE_NAME }}
 
           git-builder: docker
-          git-docker-dockerfile: Dockerfile
+          git-docker-dockerfile: eshop/Dockerfile
+
           service-instance-type: nano
           service-regions: was
+
           service-ports: "8080:http"
           service-routes: "/:8080"
           service-checks: "8080:http:/"
+
           service-env: "APP_TIME_ZONE=Asia/Jakarta"
