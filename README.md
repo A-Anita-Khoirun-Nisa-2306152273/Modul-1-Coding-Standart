@@ -73,3 +73,87 @@ Look at your CI/CD workflows (GitHub)/pipelines (GitLab). Do you think the curre
 Menurut saya, workflow yang saya buat sudah sesuai dengan konsep **Continuous Integration (CI)** karena setiap ada push maupun pull request, pipeline langsung berjalan otomatis: melakukan checkout repository, menyiapkan environment Java, lalu menjalankan test suite menggunakan Gradle. Dengan mekanisme ini, saya bisa mendapat umpan balik cepat jika ada perubahan yang membuat build rusak atau test gagal, sehingga proses integrasi ke branch utama menjadi lebih aman.
 
 Untuk **Continuous Deployment (CD)**, implementasi ini juga dapat dikatakan memenuhi prinsip CD selama proses deploy ke PaaS berjalan otomatis ketika ada perubahan yang masuk ke branch utama yakni setelah merge ke main. Dengan fitur auto-deploy dari PaaS (pull-based Koyeb), perubahan yang sudah lolos CI bisa langsung dipublikasikan tanpa langkah manual tambahan. Meski begitu, perlu tetap ada kontrol seperti membatasi deploy hanya dari branch utama dan mengelola secrets dengan benar agar deployment tetap aman dan stabil.
+
+# **Refleksi Modul 3 – Maintainability & OO Principles**
+
+## **Soal 1:**
+Explain what principles you apply to your project!
+
+**Jawaban:**
+
+## 1. Prinsip yang Diterapkan
+Pada proyek e-shop ini, saya menerapkan beberapa prinsip SOLID, yaitu **SRP, ISP, DIP, dan OCP**.
+### 1. Single Responsibility Principle (SRP)
+Saya memisahkan komponen berdasarkan tanggung jawabnya masing-masing.
+* Controller dipisah menjadi:
+  * `HomeController`
+  * `ProductController`
+  * `CarController`
+* Logika bisnis ditempatkan pada layer service:
+  * `ProductService`
+  * `CarService`
+* Akses data diletakkan pada layer repository:
+  * `ProductRepository`
+  * `CarRepository`
+Dengan struktur ini, setiap kelas memiliki satu tanggung jawab yang jelas dan tidak bercampur dengan domain lain.
+
+### 2. Interface Segregation Principle (ISP)
+Saya memisahkan interface service sesuai kebutuhan domain.
+* `ProductService` khusus untuk domain product
+* `CarService` khusus untuk domain car
+Dengan cara ini, masing-masing controller hanya bergantung pada interface yang memang dibutuhkan dan tidak dipaksa menggunakan method yang tidak relevan.
+
+### 3. Dependency Inversion Principle (DIP)
+Controller tidak bergantung langsung pada implementasi konkret, melainkan pada interface (`ProductService` dan `CarService`).
+Hal ini membuat dependency lebih fleksibel dan mudah diuji. Pada proses testing, saya menggunakan `@MockBean` untuk menyediakan dependency service saat menjalankan `@WebMvcTest`, sehingga pengujian dapat fokus pada controller tanpa harus memuat implementasi service atau repository yang sebenarnya.
+
+### 4. Open/Closed Principle (OCP)
+Saya menambahkan method `update(Car newCar)` pada model `Car` untuk mengenkapsulasi proses pembaruan data.
+Dengan pendekatan ini, jika aturan update berubah, saya cukup memodifikasi method tersebut tanpa harus mengubah logika di berbagai tempat seperti controller atau repository.
+
+## **Soal 2:**
+Explain the advantages of applying SOLID principles to your project with examples.
+
+**Jawaban:**
+
+Penerapan SOLID memberikan beberapa keuntungan nyata dalam proyek ini.
+### 1. Kode Lebih Mudah Dipelihara
+Dengan SRP, pemisahan `CarController` dan `ProductController` membuat perubahan pada fitur car tidak memengaruhi fitur product. Struktur proyek juga menjadi lebih rapi dan mudah dipahami.
+### 2. Dependensi Lebih Terkontrol
+Dengan ISP, setiap controller hanya menggunakan service yang sesuai dengan domainnya.
+Contohnya, `CarController` tidak perlu mengetahui atau mengakses method yang berkaitan dengan product.
+### 3. Mudah Diuji dan Fleksibel
+Dengan DIP, controller hanya bergantung pada interface.
+Jika suatu saat implementasi service berubah, controller tidak perlu ikut diubah.
+Dalam testing, saya bisa menggunakan `@MockBean` untuk menggantikan dependency service, sehingga test tidak bergantung pada database atau konfigurasi bean yang sebenarnya.
+### 4. Mudah Dikembangkan
+Dengan OCP, proses update pada entity `Car` terpusat di satu method (`update()`), sehingga tidak terjadi duplikasi logika.
+Jika aturan update berubah (misalnya ada validasi tambahan), perubahan cukup dilakukan di satu tempat.
+
+## **Soal 3:**
+Explain the disadvantages of not applying SOLID principles to your project with examples
+
+**Jawaban:**
+Jika prinsip SOLID tidak diterapkan, beberapa masalah berikut bisa terjadi:
+### 1. Kode Menjadi Terlalu Kompleks
+Tanpa SRP, satu controller bisa menangani banyak domain sekaligus. Hal ini membuat kode sulit dibaca, sulit dirawat, dan berisiko menimbulkan bug saat ada perubahan kecil.
+### 2. Interface Menjadi “Gemuk”
+Tanpa ISP, interface service bisa berisi terlalu banyak method yang tidak relevan untuk semua implementasi. Akibatnya, kelas harus mengimplementasikan method yang sebenarnya tidak digunakan.
+### 3. Sulit Diuji dan Tidak Fleksibel
+Tanpa DIP, controller akan langsung bergantung pada implementasi konkret.
+Hal ini membuat:
+* Testing menjadi lebih sulit
+* Sulit mengganti implementasi
+* Test lebih rentan gagal karena ketergantungan terhadap konfigurasi nyata
+### 4. Duplikasi Logika
+Tanpa OCP, logika seperti proses update bisa tersebar di banyak tempat (controller, repository, dll).
+Akibatnya:
+* Terjadi duplikasi kode
+* Sulit menjaga konsistensi
+* Perubahan aturan membutuhkan modifikasi di banyak file
+
+## Kesimpulan
+
+Penerapan SOLID pada proyek ini membantu menjaga struktur kode tetap bersih, modular, dan mudah dikembangkan.
+Selain itu, proses testing menjadi lebih sederhana dan risiko bug akibat perubahan fitur dapat diminimalkan.
+
