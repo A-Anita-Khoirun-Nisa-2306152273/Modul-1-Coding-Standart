@@ -11,7 +11,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/car")
-class CarController extends ProductController {
+public class CarController{
     @Autowired
     private CarService carService;
 
@@ -23,7 +23,7 @@ class CarController extends ProductController {
     }
 
     @PostMapping("/createCar")
-    public String createCarPost(@ModelAttribute("product") Car car, Model model){
+    public String createCarPost(@ModelAttribute("car") Car car, Model model){
         carService.create(car);
         return "redirect:CarList";
     }
