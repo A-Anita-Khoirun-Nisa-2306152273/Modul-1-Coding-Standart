@@ -54,9 +54,4 @@ public class ProductController {
         service.deleteProduct(productId);
         return "redirect:list";
     }
-<<<<<<< HEAD
 }
-=======
-}
-
->>>>>>> 62f9256 (perbaiki error)
