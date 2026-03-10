@@ -157,3 +157,60 @@ Akibatnya:
 Penerapan SOLID pada proyek ini membantu menjaga struktur kode tetap bersih, modular, dan mudah dikembangkan.
 Selain itu, proses testing menjadi lebih sederhana dan risiko bug akibat perubahan fitur dapat diminimalkan.
 
+
+# **Refleksi Modul 4 – TDD dan F.I.R.S.T. Principle**
+
+## **Soal 1:**
+Reflect based on Percival (2017) proposed self-reflective questions (in “Principles and Best Practice of Testing” submodule, chapter “Evaluating Your Testing Objectives”), whether this TDD flow is useful enough for you or not. If not, explain things that you need to do next time you make more tests.
+
+**Jawaban:**
+Dalam pengerjaan exercise ini, saya merasa alur Test-Driven Development (TDD) cukup membantu, terutama untuk memecah implementasi menjadi langkah-langkah kecil yang lebih terarah. Dengan menulis test untuk Order, OrderRepository, OrderServiceImpl, Payment, PaymentRepository, dan PaymentServiceImpl, saya menjadi lebih mudah memahami perilaku yang diharapkan dari setiap class sebelum atau saat implementasi dilakukan. TDD juga membantu saya memverifikasi apakah perubahan pada model, repository, atau service masih konsisten dengan kebutuhan fitur, misalnya pada validasi status order, penyimpanan payment, dan perubahan status payment terhadap order.
+Namun, jika saya refleksikan lebih jauh, alur TDD yang saya lakukan masih belum sepenuhnya ideal. Walaupun saya sudah memiliki unit test untuk banyak class, dari hasil akhir project terlihat bahwa beberapa test masih berperan lebih sebagai verifikasi setelah implementasi, bukan selalu murni sebagai pemandu desain sejak awal. Selain itu, masih ada beberapa bagian yang pengujiannya belum terlalu kaya pada edge case, sehingga TDD yang saya lakukan belum sepenuhnya memaksimalkan eksplorasi perilaku sistem sebelum coding. Dengan kata lain, TDD yang saya lakukan sudah berguna, tetapi masih bisa ditingkatkan agar lebih disiplin dan lebih dekat dengan siklus RED → GREEN → REFACTOR yang ideal.
+Hal yang saya rasakan paling membantu dari TDD adalah:
+- saya lebih cepat mengetahui jika ada perilaku class yang tidak sesuai;
+- saya lebih percaya diri saat melakukan perubahan karena sudah ada safety net berupa test;
+- saya terdorong untuk memikirkan contract dari method, misalnya apa yang harus terjadi ketika status payment berubah atau ketika order tidak ditemukan.
+Meski begitu, ada beberapa hal yang perlu saya perbaiki di masa depan. Pertama, saya perlu lebih disiplin menulis test yang benar-benar gagal terlebih dahulu sebelum menulis implementasi. Kedua, saya perlu menambahkan lebih banyak test untuk kondisi batas dan kondisi error, bukan hanya skenario utama. Ketiga, saya perlu memastikan setiap commit benar-benar mencerminkan fase TDD, sehingga proses pengembangan tidak hanya memiliki test, tetapi juga menunjukkan alur berpikir yang sistematis.
+Jika saya membuat lebih banyak test di masa mendatang, saya akan:
+- menulis test failure lebih dulu untuk setiap requirement kecil;
+- menambahkan test untuk edge case, invalid input, dan exception path;
+- melakukan refactor setelah test hijau agar struktur test dan kode produksi tetap rapi;
+- menghindari membuat test yang terlalu besar atau menguji terlalu banyak hal sekaligus;
+- menggunakan test sebagai alat desain, bukan hanya alat verifikasi di akhir.
+
+Secara keseluruhan, menurut saya TDD dalam exercise ini cukup berguna karena membantu menjaga arah implementasi dan mengurangi rasa ragu saat mengubah kode. Namun, saya masih perlu meningkatkan kedisiplinan dalam mengikuti siklus TDD secara penuh agar manfaatnya lebih maksimal.
+
+## **Soal 2:**
+You have created unit tests in Tutorial. Now reflect whether your tests have successfully followed F.I.R.S.T. principle or not. If not, explain things that you need to do the next time you create more tests.
+
+**Jawaban:**
+Menurut saya, unit test yang saya buat sudah cukup mendekati prinsip F.I.R.S.T., tetapi belum sepenuhnya sempurna di semua aspek.
+
+*Fast*
+Sebagian besar test yang saya buat tergolong cepat karena berfokus pada unit kecil seperti model, repository in-memory, dan service. Test seperti OrderTest, PaymentTest, OrderRepositoryTest, PaymentRepositoryTest, dan PaymentServiceImplTest tidak membutuhkan database sungguhan atau koneksi jaringan, sehingga secara umum dapat dijalankan dengan cepat. Dalam hal ini, prinsip Fast sudah cukup terpenuhi.
+
+*Independent*
+Sebagian besar test juga cukup independen karena masing-masing test membuat data sendiri atau menggunakan @BeforeEach untuk reset kondisi awal. Ini membantu agar test tidak terlalu bergantung pada urutan eksekusi test lain. Namun, saya masih merasa beberapa test bisa dibuat lebih independen lagi dengan setup yang lebih ringkas dan lebih eksplisit, sehingga setiap test benar-benar berdiri sendiri dan tidak terlalu bergantung pada shared preparation yang besar.
+
+*Repeatable*
+Test yang saya buat pada umumnya repeatable karena menggunakan data yang deterministik dan tidak bergantung pada layanan eksternal. Selama environment-nya sama, hasil test seharusnya konsisten. Jadi, prinsip Repeatable sudah cukup baik diterapkan.
+
+*Self-validating*
+Saya juga merasa prinsip Self-validating sudah cukup terpenuhi karena test-test saya menggunakan assertion yang jelas seperti assertEquals, assertNull, assertNotNull, assertThrows, dan verifikasi Mockito. Dengan begitu, hasil test langsung menunjukkan pass atau fail tanpa perlu interpretasi manual. Ini merupakan salah satu bagian yang menurut saya sudah cukup baik.
+
+*Timely*
+Untuk aspek Timely, saya merasa ini yang paling perlu saya refleksikan. Secara hasil, saya memang sudah menulis test untuk banyak class. Namun, belum semua test dapat dipastikan benar-benar ditulis sebelum implementasi secara disiplin pada setiap langkah kecil. Artinya, prinsip timely sudah saya upayakan, tetapi pelaksanaannya masih belum konsisten sepenuhnya seperti semangat TDD yang ideal.
+Selain itu, saya juga menyadari masih ada beberapa hal yang bisa diperbaiki agar test saya lebih sesuai dengan F.I.R.S.T.:
+- beberapa setup test masih cukup panjang dan berulang;
+- beberapa class masih lebih banyak diuji dari jalur normal dibandingkan jalur ekstrem atau tidak valid;
+- struktur data uji bisa dibuat lebih ringkas agar fokus test lebih jelas;
+- nama test sudah cukup informatif, tetapi masih bisa dibuat lebih spesifik terhadap satu perilaku.
+
+Jika ke depannya saya membuat lebih banyak unit test, saya akan:
+- menjaga agar setiap test hanya memverifikasi satu perilaku utama;
+- mengurangi duplikasi setup dengan helper method yang tetap mudah dibaca;
+- memperbanyak pengujian terhadap edge case dan invalid case;
+- memastikan test benar-benar ditulis sebelum implementasi ketika menerapkan TDD;
+- menjaga agar test tetap sederhana, cepat, dan tidak bergantung pada resource eksternal.
+
+Secara keseluruhan, saya menilai test yang saya buat sudah cukup mengikuti prinsip F.I.R.S.T., terutama pada aspek Fast, Repeatable, dan Self-validating, tetapi masih perlu ditingkatkan pada aspek Timely dan pada kedisiplinan menyusun test yang lebih kecil, fokus, dan benar-benar lahir sebelum implementasi ditulis.
