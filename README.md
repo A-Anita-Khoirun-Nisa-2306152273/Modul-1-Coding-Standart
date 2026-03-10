@@ -166,11 +166,16 @@ Reflect based on Percival (2017) proposed self-reflective questions (in “Princ
 **Jawaban:**
 Dalam pengerjaan exercise ini, saya merasa alur Test-Driven Development (TDD) cukup membantu, terutama untuk memecah implementasi menjadi langkah-langkah kecil yang lebih terarah. Dengan menulis test untuk Order, OrderRepository, OrderServiceImpl, Payment, PaymentRepository, dan PaymentServiceImpl, saya menjadi lebih mudah memahami perilaku yang diharapkan dari setiap class sebelum atau saat implementasi dilakukan. TDD juga membantu saya memverifikasi apakah perubahan pada model, repository, atau service masih konsisten dengan kebutuhan fitur, misalnya pada validasi status order, penyimpanan payment, dan perubahan status payment terhadap order.
 Namun, jika saya refleksikan lebih jauh, alur TDD yang saya lakukan masih belum sepenuhnya ideal. Walaupun saya sudah memiliki unit test untuk banyak class, dari hasil akhir project terlihat bahwa beberapa test masih berperan lebih sebagai verifikasi setelah implementasi, bukan selalu murni sebagai pemandu desain sejak awal. Selain itu, masih ada beberapa bagian yang pengujiannya belum terlalu kaya pada edge case, sehingga TDD yang saya lakukan belum sepenuhnya memaksimalkan eksplorasi perilaku sistem sebelum coding. Dengan kata lain, TDD yang saya lakukan sudah berguna, tetapi masih bisa ditingkatkan agar lebih disiplin dan lebih dekat dengan siklus RED → GREEN → REFACTOR yang ideal.
+
 Hal yang saya rasakan paling membantu dari TDD adalah:
 - saya lebih cepat mengetahui jika ada perilaku class yang tidak sesuai;
 - saya lebih percaya diri saat melakukan perubahan karena sudah ada safety net berupa test;
 - saya terdorong untuk memikirkan contract dari method, misalnya apa yang harus terjadi ketika status payment berubah atau ketika order tidak ditemukan.
-Meski begitu, ada beberapa hal yang perlu saya perbaiki di masa depan. Pertama, saya perlu lebih disiplin menulis test yang benar-benar gagal terlebih dahulu sebelum menulis implementasi. Kedua, saya perlu menambahkan lebih banyak test untuk kondisi batas dan kondisi error, bukan hanya skenario utama. Ketiga, saya perlu memastikan setiap commit benar-benar mencerminkan fase TDD, sehingga proses pengembangan tidak hanya memiliki test, tetapi juga menunjukkan alur berpikir yang sistematis.
+Meski begitu, ada beberapa hal yang perlu saya perbaiki di masa depan.
+Pertama, saya perlu lebih disiplin menulis test yang benar-benar gagal terlebih dahulu sebelum menulis implementasi.
+Kedua, saya perlu menambahkan lebih banyak test untuk kondisi batas dan kondisi error, bukan hanya skenario utama.
+Ketiga, saya perlu memastikan setiap commit benar-benar mencerminkan fase TDD, sehingga proses pengembangan tidak hanya memiliki test, tetapi juga menunjukkan alur berpikir yang sistematis.
+
 Jika saya membuat lebih banyak test di masa mendatang, saya akan:
 - menulis test failure lebih dulu untuk setiap requirement kecil;
 - menambahkan test untuk edge case, invalid input, dan exception path;
