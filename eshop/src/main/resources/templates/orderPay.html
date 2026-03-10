@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Pay Order</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+  <h3>Pay Order</h3>
+
+  <p><strong>Order ID:</strong> <span th:text="${order.id}"></span></p>
+  <p><strong>Author:</strong> <span th:text="${order.author}"></span></p>
+  <p><strong>Product:</strong> <span th:text="${order.products[0].productName}"></span></p>
+
+  <form th:action="@{/order/pay/{id}(id=${order.id})}" method="post">
+    <div class="form-group">
+      <label>Payment Method</label>
+      <select name="method" class="form-control mb-3 col-4">
+        <option value="VOUCHER_CODE">VOUCHER_CODE</option>
+        <option value="CASH_ON_DELIVERY">CASH_ON_DELIVERY</option>
+      </select>
+    </div>
+
+    <hr>
+    <h5>Voucher Code</h5>
+    <div class="form-group">
+      <input type="text" name="voucherCode" class="form-control mb-3 col-4" placeholder="ESHOP1234ABC5678">
+    </div>
+
+    <hr>
+    <h5>Cash on Delivery</h5>
+    <div class="form-group">
+      <input type="text" name="address" class="form-control mb-3 col-4" placeholder="Delivery address">
+    </div>
+    <div class="form-group">
+      <input type="text" name="deliveryFee" class="form-control mb-3 col-4" placeholder="Delivery fee">
+    </div>
+
+    <button type="submit" class="btn btn-success">Pay</button>
+  </form>
+</div>
+</body>
+</html>
