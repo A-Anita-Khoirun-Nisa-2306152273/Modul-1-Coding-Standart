@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Detail</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h3>Payment Detail</h3>
+
+    <p><strong>Payment ID:</strong> <span th:text="${payment.id}"></span></p>
+    <p><strong>Method:</strong> <span th:text="${payment.method}"></span></p>
+    <p><strong>Status:</strong> <span th:text="${payment.status}"></span></p>
+    <p><strong>Order ID:</strong> <span th:text="${payment.order.id}"></span></p>
+
+    <div>
+        <h5>Payment Data</h5>
+        <ul>
+            <li th:each="entry : ${payment.paymentData.entrySet()}">
+                <span th:text="${entry.key}"></span> :
+                <span th:text="${entry.value}"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
